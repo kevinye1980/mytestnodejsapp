@@ -11,12 +11,14 @@ var path = require('path');
 //load customers route
 var customers = require('./routes/customers'); 
 var app = express();
+var app1 = express();
 
 var connection  = require('express-myconnection'); 
 var mysql = require('mysql');
 
 // all environments
-app.set('port', process.env.PORT || 4300);
+app1.set('port', 9012);
+app.set('port', process.env.PORT || 9011);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 //app.use(express.favicon());
@@ -41,19 +43,21 @@ app.use(
     
     connection(mysql,{
         
-        host: 'mysql://mysql:3306/', //'localhost',
-        user: 'userEHX',
-        password : 'hMmx56FN4GHpMXOl',
+        host: 'kevintest.mysql.singapore.rds.aliyuncs.com',
+        user: 'root',
+        password : 'Contoso4444',
         port : 3306, //port mysql
-        database:'sampledb'
+        database:'nodejs'
 
     },'pool') //or single
 
 );
 
 
+app.get('/',function(req,res){
+   res.sendfile(path.join(__dirname+'/index.html'));
+});
 
-app.get('/', routes.index);
 app.get('/customers', customers.list);
 app.get('/customers/add', customers.add);
 app.post('/customers/add', customers.save);
@@ -64,6 +68,17 @@ app.post('/customers/edit/:id',customers.save_edit);
 
 app.use(app.router);
 
+app1.get('/service1',function(req,res){
+    res.send('service 1 is listening at port ' + app1.get('port'));
+}
+);
+
+app1.use(app1.router);
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+http.createServer(app1).listen(app1.get('port'), function(){
+  console.log('Express server listening on port ' + app1.get('port'));
+});
+
