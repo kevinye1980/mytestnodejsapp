@@ -7,6 +7,9 @@ var express = require('express');
 var routes = require('./routes');
 var http = require('http');
 var path = require('path');
+var os = require("os");
+var hostname = os.hostname();
+
 
 //load customers route
 var customers = require('./routes/customers'); 
@@ -69,7 +72,7 @@ app.post('/customers/edit/:id',customers.save_edit);
 app.use(app.router);
 
 app1.get('/service1',function(req,res){
-    res.send('service 1 is listening at port ' + app1.get('port'));
+    res.send('service 1 is listening at port ' + app1.get('port') + ' on server ' + hostname);
 }
 );
 
