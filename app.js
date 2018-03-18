@@ -46,9 +46,9 @@ app.use(
     
     connection(mysql,{
         
-        host: 'kevintest.mysql.singapore.rds.aliyuncs.com',
+        host: '<alicloud mysql instance intranet address>',
         user: 'root',
-        password : 'Contoso4444',
+        password : '<your password>',
         port : 3306, //port mysql
         database:'nodejs'
 
